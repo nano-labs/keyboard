@@ -2,6 +2,7 @@
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+![prototype](https://github.com/nano-labs/keyboard/blob/main/img/keyboard.jpg)
 
 Circuits and PCB can be found here: https://oshwlab.com/nanook/keyboard
 

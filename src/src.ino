@@ -5,8 +5,8 @@ int encoderB = 6;
 int encoderPos = 0;
 int encoderALast = LOW;
 int encoderRead = LOW;
-int right = 12;
-int left = 11;
+int right = 11;
+int left = 12;
 int profile1 = 9;
 int profile2 = 8;
 int profile3 = 2;
@@ -36,10 +36,12 @@ void setup() {
   pinMode(profile1, INPUT_PULLUP);
   pinMode(profile2, INPUT_PULLUP);
   pinMode(profile3, INPUT_PULLUP);
-  pinMode(key1, INPUT_PULLDOWN);
-  pinMode(key2, INPUT_PULLDOWN);
-  pinMode(key3, INPUT_PULLDOWN);
-  pinMode(key4, INPUT_PULLDOWN);
+  pinMode(key1, INPUT_PULLUP);
+  pinMode(key2, INPUT_PULLUP);
+  pinMode(key3, INPUT_PULLUP);
+  pinMode(key4, INPUT_PULLUP);
+  pinMode(left, INPUT_PULLUP);
+  pinMode(right, INPUT_PULLUP);
   pinMode(profile1LED, OUTPUT);
   pinMode(profile2LED, OUTPUT);
   pinMode(profile3LED, OUTPUT);
@@ -49,20 +51,73 @@ void setup() {
   pinMode(key4LED, OUTPUT);
   Keyboard.begin();
 //  Serial.begin(9600);
+  updateLED();
 }
 
 void up() {
-  if (isNavegation()) {
+  if (isNavegation() || isSelection()) {
     Keyboard.press(KEY_UP_ARROW);
     Keyboard.release(KEY_UP_ARROW);
+  } else if (isMove()) {
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(KEY_UP_ARROW);
+    Keyboard.release(KEY_LEFT_GUI);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(KEY_UP_ARROW);
+  } else if (isHorizontal()) {
+    Keyboard.press(KEY_LEFT_ARROW);
+    Keyboard.release(KEY_LEFT_ARROW);    
   }
 }
 
 void down() {
-  if (isNavegation()) {
+  if (isNavegation() || isSelection()) {
     Keyboard.press(KEY_DOWN_ARROW);
     Keyboard.release(KEY_DOWN_ARROW);
+  } else if (isMove()) {
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(KEY_DOWN_ARROW);
+    Keyboard.release(KEY_LEFT_GUI);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(KEY_DOWN_ARROW);
+  } else if (isHorizontal()) {
+    Keyboard.press(KEY_RIGHT_ARROW);
+    Keyboard.release(KEY_RIGHT_ARROW);    
   }
+}
+void pushLeft() {
+  if (isNavegation()) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.write('a');
+    Keyboard.release(KEY_LEFT_CTRL);
+  } else if (isSelection()) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.write('A');
+    Keyboard.release(KEY_LEFT_CTRL);
+  } else if (isMove()) {
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.write('[');
+    Keyboard.release(KEY_LEFT_GUI);
+  }
+  delay(200);
+}
+void pushRight() {
+  if (isNavegation()) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.write('e');
+    Keyboard.release(KEY_LEFT_CTRL);
+  } else if (isSelection()) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.write('E');
+    Keyboard.release(KEY_LEFT_CTRL);
+  } else if (isMove()) {
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.write(']');
+    Keyboard.release(KEY_LEFT_GUI);
+  }
+  delay(200);
 }
 bool isNavegation() {
   if (key1State == LOW && key2State == LOW && key3State == LOW && key4State == LOW) {
@@ -71,7 +126,34 @@ bool isNavegation() {
     return false;
   }
 }
+bool isSelection() {
+  if (key1State == HIGH) {
+    return true;
+  } else {
+    return false;
+  }
+}
+bool isMove() {
+  if (key2State == HIGH) {
+    return true;
+  } else {
+    return false;
+  }
+}
+bool isHorizontal() {
+  if (key4State == HIGH) {
+    return true;
+  } else {
+    return false;
+  }
+}
+void releaseModKeys() {
+  Keyboard.release(KEY_LEFT_SHIFT);
+  Keyboard.release(KEY_LEFT_CTRL);
+  Keyboard.release(KEY_LEFT_GUI);
+  Keyboard.release(KEY_LEFT_ALT);
 
+}
 void pushProfile1() {
     profile1State = HIGH;
     profile2State = LOW;
@@ -88,43 +170,55 @@ void pushProfile3() {
     profile1State = LOW;
     profile2State = LOW;
     profile3State = HIGH;
+    releaseModKeys();
     updateLED();
 }
 void pushKey1() {
   if (key1State == LOW) {
-    key1State == HIGH;
+    key1State = HIGH;
+    Keyboard.press(KEY_LEFT_SHIFT);
   } else {
-    key1State == LOW;
+    key1State = LOW;
+    Keyboard.release(KEY_LEFT_SHIFT);
   }
   updateLED();
-  delay(100);
+  delay(300);
 }
 void pushKey2() {
   if (key2State == LOW) {
-    key2State == HIGH;
+    key2State = HIGH;
+    key1State = LOW;
+    Keyboard.release(KEY_LEFT_SHIFT);
   } else {
-    key2State == LOW;
+    key2State = LOW;
   }
   updateLED();
-  delay(100);
+  delay(300);
 }
 void pushKey3() {
   if (key3State == LOW) {
-    key3State == HIGH;
+    releaseModKeys();
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(KEY_LEFT_ALT);
+    Keyboard.write('b');
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(KEY_LEFT_ALT);
+//    key3State = HIGH;
   } else {
-    key3State == LOW;
+    key3State = LOW;
   }
   updateLED();
-  delay(100);
+  delay(300);
 }
 void pushKey4() {
+  Serial.println(key4State);
   if (key4State == LOW) {
-    key4State == HIGH;
+    key4State = HIGH;
   } else {
-    key4State == LOW;
+    key4State = LOW;
   }
   updateLED();
-  delay(100);
+  delay(300);
 }
 
 void updateLED() {
@@ -163,9 +257,9 @@ void loop() {
   encoderRead = digitalRead(encoderA);
   if ((encoderALast == LOW) && (encoderRead == HIGH)) {
     if (digitalRead(encoderB) == LOW) {
-      up();
-    } else {
       down();
+    } else {
+      up();
     }
   }
   encoderALast = encoderRead;
@@ -179,16 +273,22 @@ void loop() {
   if (digitalRead(profile3) == LOW) {
     pushProfile3();
   }
-  if (digitalRead(key1) == HIGH) {
+  if (digitalRead(key1) == LOW) {
     pushKey1();
   }
-  if (digitalRead(key2) == HIGH) {
+  if (digitalRead(key2) == LOW) {
     pushKey2();
   }
-  if (digitalRead(key3) == HIGH) {
+  if (digitalRead(key3) == LOW) {
     pushKey3();
   }
-  if (digitalRead(key4) == HIGH) {
+  if (digitalRead(key4) == LOW) {
     pushKey4();
+  }
+  if (digitalRead(left) == LOW) {
+    pushLeft();
+  }
+  if (digitalRead(right) == LOW) {
+    pushRight();
   }
 }
