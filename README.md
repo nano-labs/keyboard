@@ -22,6 +22,14 @@ Circuits and PCB can be found here: https://oshwlab.com/nanook/keyboard
 - [STL files](https://github.com/nano-labs/keyboard/blob/main/3Dfiles/enclosure/)
 
 
+### Keycaps art:
+
+![keycaps](https://github.com/nano-labs/keyboard/blob/main/keycaps_art/nanooklabs-09.jpg)
+Thanks [nubaia](https://www.fiverr.com/nubaia) for the great work. Check their Fiverr profile: [https://www.fiverr.com/nubaia](https://www.fiverr.com/nubaia)
+
+- [Files](https://github.com/nano-labs/keyboard/blob/main/keycaps_art/)
+
+
 ### Required components:
 
 - [Rotary Encoder](https://www.amazon.co.uk/gp/product/B08C2RMFBX/ref=as_li_tl?ie=UTF8&camp=1634&creative=6738&creativeASIN=B08C2RMFBX&linkCode=as2&tag=nanooklabs-21&linkId=24a5fdf900b0120c3f79e740f52cdc03)
