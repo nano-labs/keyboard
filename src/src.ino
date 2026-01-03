@@ -1,4 +1,5 @@
 #include <Keyboard.h>
+#include <Mouse.h>
 
 int encoderA = 7;
 int encoderB = 6;
@@ -25,7 +26,7 @@ int key4LED = 21; //A7
 int profile1State = HIGH;
 int profile2State = LOW;
 int profile3State = LOW;
-int key1State = LOW;
+int key1State = HIGH;
 int key2State = LOW;
 int key3State = LOW;
 int key4State = LOW;
@@ -50,6 +51,7 @@ void setup() {
   pinMode(key3LED, OUTPUT);
   pinMode(key4LED, OUTPUT);
   Keyboard.begin();
+  Mouse.begin();
   ledDance();
 //  Serial.begin(9600);
 }
@@ -98,60 +100,100 @@ void ledDance() {
 }
 
 void up() {
+  int key;
+  if (isX()) {
+    key = KEY_LEFT_ARROW;
+  } else {
+    key = KEY_UP_ARROW;
+  }
   if (getProfile() == 1) {
-    if (isNavegation()) {
-      Keyboard.press(KEY_UP_ARROW);
-      Keyboard.release(KEY_UP_ARROW);
-    } else if (isSelection() && isHorizontal()) {
-      Keyboard.press(KEY_LEFT_SHIFT);
-      Keyboard.press(KEY_LEFT_ARROW);
-      Keyboard.release(KEY_LEFT_ARROW);    
-      Keyboard.release(KEY_LEFT_SHIFT);
-    } else if (isSelection()) {
-      Keyboard.press(KEY_LEFT_SHIFT);
-      Keyboard.press(KEY_UP_ARROW);
-      Keyboard.release(KEY_UP_ARROW);
-      Keyboard.release(KEY_LEFT_SHIFT);
-    } else if (isMove()) {
-      Keyboard.press(KEY_LEFT_GUI);
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.press(KEY_UP_ARROW);
-      Keyboard.release(KEY_LEFT_GUI);
-      Keyboard.release(KEY_LEFT_CTRL);
-      Keyboard.release(KEY_UP_ARROW);
-    } else if (isHorizontal()) {
-      Keyboard.press(KEY_LEFT_ARROW);
-      Keyboard.release(KEY_LEFT_ARROW);    
-    }
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(key);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(key);
+  } else if (getProfile() == 2) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(KEY_LEFT_SHIFT);
+    Keyboard.press(key);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(KEY_LEFT_SHIFT);
+    Keyboard.release(key);
+  } else if (getProfile() == 3) {
+    Mouse.move(0, 0, 1);
+    // if (isNavegation()) {
+    //   Keyboard.press(KEY_UP_ARROW);
+    //   Keyboard.release(KEY_UP_ARROW);
+    // } else if (isSelection() && isHorizontal()) {
+    //   Keyboard.press(KEY_LEFT_SHIFT);
+    //   Keyboard.press(KEY_LEFT_ARROW);
+    //   Keyboard.release(KEY_LEFT_ARROW);    
+    //   Keyboard.release(KEY_LEFT_SHIFT);
+    // } else if (isSelection()) {
+    //   Keyboard.press(KEY_LEFT_SHIFT);
+    //   Keyboard.press(KEY_UP_ARROW);
+    //   Keyboard.release(KEY_UP_ARROW);
+    //   Keyboard.release(KEY_LEFT_SHIFT);
+    // } else if (isMove()) {
+    //   Keyboard.press(KEY_LEFT_GUI);
+    //   Keyboard.press(KEY_LEFT_CTRL);
+    //   Keyboard.press(KEY_UP_ARROW);
+    //   Keyboard.release(KEY_LEFT_GUI);
+    //   Keyboard.release(KEY_LEFT_CTRL);
+    //   Keyboard.release(KEY_UP_ARROW);
+    // } else if (isHorizontal()) {
+    //   Keyboard.press(KEY_LEFT_ARROW);
+    //   Keyboard.release(KEY_LEFT_ARROW);    
+    // }
   }
 }
 
 void down() {
+  int key;
+  if (isX()) {
+    key = KEY_RIGHT_ARROW;
+  } else {
+    key = KEY_DOWN_ARROW;
+  }
   if (getProfile() == 1) {
-    if (isNavegation()) {
-      Keyboard.press(KEY_DOWN_ARROW);
-      Keyboard.release(KEY_DOWN_ARROW);
-    } else if (isSelection() && isHorizontal()) {
-      Keyboard.press(KEY_LEFT_SHIFT);
-      Keyboard.press(KEY_RIGHT_ARROW);
-      Keyboard.release(KEY_RIGHT_ARROW);    
-      Keyboard.release(KEY_LEFT_SHIFT);
-    } else if (isSelection()) {
-      Keyboard.press(KEY_LEFT_SHIFT);
-      Keyboard.press(KEY_DOWN_ARROW);
-      Keyboard.release(KEY_DOWN_ARROW);
-      Keyboard.release(KEY_LEFT_SHIFT);
-    } else if (isMove()) {
-      Keyboard.press(KEY_LEFT_GUI);
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.press(KEY_DOWN_ARROW);
-      Keyboard.release(KEY_LEFT_GUI);
-      Keyboard.release(KEY_LEFT_CTRL);
-      Keyboard.release(KEY_DOWN_ARROW);
-    } else if (isHorizontal()) {
-      Keyboard.press(KEY_RIGHT_ARROW);
-      Keyboard.release(KEY_RIGHT_ARROW);    
-    }
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(key);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(key);
+  } else if (getProfile() == 2) {
+    Keyboard.press(KEY_LEFT_CTRL);
+    Keyboard.press(KEY_LEFT_SHIFT);
+    Keyboard.press(key);
+    Keyboard.release(KEY_LEFT_CTRL);
+    Keyboard.release(KEY_LEFT_SHIFT);
+    Keyboard.release(key);
+  } else if (getProfile() == 3) {
+    Mouse.move(0, 0, -1);
+
+  // if (getProfile() == 1) {
+  //   if (isNavegation()) {
+  //     Keyboard.press(KEY_DOWN_ARROW);
+  //     Keyboard.release(KEY_DOWN_ARROW);
+  //   } else if (isSelection() && isHorizontal()) {
+  //     Keyboard.press(KEY_LEFT_SHIFT);
+  //     Keyboard.press(KEY_RIGHT_ARROW);
+  //     Keyboard.release(KEY_RIGHT_ARROW);    
+  //     Keyboard.release(KEY_LEFT_SHIFT);
+  //   } else if (isSelection()) {
+  //     Keyboard.press(KEY_LEFT_SHIFT);
+  //     Keyboard.press(KEY_DOWN_ARROW);
+  //     Keyboard.release(KEY_DOWN_ARROW);
+  //     Keyboard.release(KEY_LEFT_SHIFT);
+  //   } else if (isMove()) {
+  //     Keyboard.press(KEY_LEFT_GUI);
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.press(KEY_DOWN_ARROW);
+  //     Keyboard.release(KEY_LEFT_GUI);
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //     Keyboard.release(KEY_DOWN_ARROW);
+  //   } else if (isHorizontal()) {
+  //     Keyboard.press(KEY_RIGHT_ARROW);
+  //     Keyboard.release(KEY_RIGHT_ARROW);    
+  //   }
   }
 }
 void pushLeft() {
@@ -196,6 +238,21 @@ void pushRight() {
   }
   delay(200);
 }
+bool isX() {
+  if (key1State == HIGH && key2State == LOW && key3State == LOW && key4State == LOW) {
+    return true;
+  } else {
+    return false;
+  }
+}
+bool isY() {
+  if (key1State == LOW && key2State == HIGH && key3State == LOW && key4State == LOW) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 bool isNavegation() {
   if (key1State == LOW && key2State == LOW && key3State == LOW && key4State == LOW) {
     return true;
@@ -241,74 +298,87 @@ void releaseModKeys() {
 
 }
 void pushProfile1() {
+  // rotate
     profile1State = HIGH;
     profile2State = LOW;
     profile3State = LOW;
     updateLED();
 }
 void pushProfile2() {
+  // pan
     profile1State = LOW;
     profile2State = HIGH;
     profile3State = LOW;
     updateLED();
 }
 void pushProfile3() {
+  // zoom
     profile1State = LOW;
     profile2State = LOW;
     profile3State = HIGH;
     updateLED();
 }
 void pushKey1() {
-  if (getProfile() == 1) {
-    if (key1State == LOW) {
-      key1State = HIGH;
-      key2State = LOW;
-    } else {
-      key1State = LOW;
-    }
+// X
+  if (key1State == LOW) {
+    key1State = HIGH;
+    key2State = LOW;
+    key3State = LOW;
+    key4State = LOW;
+  } else {
+    key1State = HIGH;
   }
   updateLED();
   delay(300);
 }
 void pushKey2() {
-  if (getProfile() == 1) {
-    if (key2State == LOW) {
-      key2State = HIGH;
-      key1State = LOW;
-    } else {
-      key2State = LOW;
-    }
+// Y
+  if (key2State == LOW) {
+    key2State = HIGH;
+    key1State = LOW;
+    key3State = LOW;
+    key4State = LOW;
+  } else {
+    key2State = HIGH;
   }
   updateLED();
   delay(300);
 }
 void pushKey3() {
-  if (getProfile() == 1) {
-    if (key3State == LOW) {
-      releaseModKeys();
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.press(KEY_LEFT_ALT);
-      Keyboard.write('b');
-      Keyboard.release(KEY_LEFT_CTRL);
-      Keyboard.release(KEY_LEFT_ALT);
-  //    key3State = HIGH;
-    } else {
-      key3State = LOW;
-    }
-  }
-  updateLED();
+  Keyboard.press(KEY_LEFT_SHIFT);
+  Keyboard.press(KEY_KP_7);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  Keyboard.release(KEY_KP_7);
   delay(300);
+
+  // if (getProfile() == 1) {
+  //   if (key3State == LOW) {
+  //     releaseModKeys();
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.press(KEY_LEFT_ALT);
+  //     Keyboard.write('b');
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //     Keyboard.release(KEY_LEFT_ALT);
+  //    key3State = HIGH;
+  //   } else {
+  //     key3State = LOW;
+  //   }
+  // }
+  // updateLED();
+  // delay(300);
 }
 void pushKey4() {
-  if (getProfile() == 1) {
-    if (key4State == LOW) {
-      key4State = HIGH;
-    } else {
-      key4State = LOW;
-    }
-  }
-  updateLED();
+  Keyboard.write('f');
   delay(300);
+  // if (getProfile() == 1) {
+  //   if (key4State == LOW) {
+  //     key4State = HIGH;
+  //   } else {
+  //     key4State = LOW;
+  //   }
+  // }
+  // updateLED();
+  // delay(300);
 }
 
 void updateLED() {
