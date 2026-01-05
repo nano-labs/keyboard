@@ -30,6 +30,8 @@ int key1State = HIGH;
 int key2State = LOW;
 int key3State = LOW;
 int key4State = LOW;
+int viewport = KEY_KP_1;
+unsigned long lastViewportPress = millis();
 
 void setup() {
   pinMode (encoderA, INPUT);
@@ -101,17 +103,22 @@ void ledDance() {
 
 void up() {
   int key;
-  if (isX()) {
-    key = KEY_LEFT_ARROW;
-  } else {
-    key = KEY_UP_ARROW;
-  }
   if (getProfile() == 1) {
+    if (isX()) {
+      key = KEY_RIGHT_ARROW;
+    } else {
+      key = KEY_UP_ARROW;
+    }
     Keyboard.press(KEY_LEFT_CTRL);
     Keyboard.press(key);
     Keyboard.release(KEY_LEFT_CTRL);
     Keyboard.release(key);
   } else if (getProfile() == 2) {
+    if (isX()) {
+      key = KEY_LEFT_ARROW;
+    } else {
+      key = KEY_UP_ARROW;
+    }
     Keyboard.press(KEY_LEFT_CTRL);
     Keyboard.press(KEY_LEFT_SHIFT);
     Keyboard.press(key);
@@ -149,17 +156,22 @@ void up() {
 
 void down() {
   int key;
-  if (isX()) {
-    key = KEY_RIGHT_ARROW;
-  } else {
-    key = KEY_DOWN_ARROW;
-  }
   if (getProfile() == 1) {
+    if (isX()) {
+      key = KEY_LEFT_ARROW;
+    } else {
+      key = KEY_DOWN_ARROW;
+    }
     Keyboard.press(KEY_LEFT_CTRL);
     Keyboard.press(key);
     Keyboard.release(KEY_LEFT_CTRL);
     Keyboard.release(key);
   } else if (getProfile() == 2) {
+    if (isX()) {
+      key = KEY_RIGHT_ARROW;
+    } else {
+      key = KEY_DOWN_ARROW;
+    }
     Keyboard.press(KEY_LEFT_CTRL);
     Keyboard.press(KEY_LEFT_SHIFT);
     Keyboard.press(key);
@@ -197,46 +209,71 @@ void down() {
   }
 }
 void pushLeft() {
-  if (getProfile() == 1) {
-    if (isNavegation()) {
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.write('a');
-      Keyboard.release(KEY_LEFT_CTRL);
-    } else if (isSelection()) {
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.write('A');
-      Keyboard.release(KEY_LEFT_CTRL);
-    } else if (isMove()) {
-      Keyboard.press(KEY_LEFT_GUI);
-      Keyboard.write('[');
-      Keyboard.release(KEY_LEFT_GUI);
-    } else if (isHorizontal()) {
-      Keyboard.press(KEY_PAGE_UP);
-      Keyboard.release(KEY_PAGE_UP);
-    }
+  int key;
+  if (isX()) {
+    key = KEY_LEFT_ARROW;
+  } else {
+    key = KEY_UP_ARROW;
   }
-  delay(200);
+  Keyboard.press(KEY_LEFT_SHIFT);
+  Keyboard.press(key);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  Keyboard.release(key);
+
+  delay(300);
+
+  // if (getProfile() == 1) {
+  //   if (isNavegation()) {
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.write('a');
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //   } else if (isSelection()) {
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.write('A');
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //   } else if (isMove()) {
+  //     Keyboard.press(KEY_LEFT_GUI);
+  //     Keyboard.write('[');
+  //     Keyboard.release(KEY_LEFT_GUI);
+  //   } else if (isHorizontal()) {
+  //     Keyboard.press(KEY_PAGE_UP);
+  //     Keyboard.release(KEY_PAGE_UP);
+  //   }
+  // }
+  // delay(200);
 }
 void pushRight() {
-  if (getProfile() == 1) {
-    if (isNavegation()) {
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.write('e');
-      Keyboard.release(KEY_LEFT_CTRL);
-    } else if (isSelection()) {
-      Keyboard.press(KEY_LEFT_CTRL);
-      Keyboard.write('E');
-      Keyboard.release(KEY_LEFT_CTRL);
-    } else if (isMove()) {
-      Keyboard.press(KEY_LEFT_GUI);
-      Keyboard.write(']');
-      Keyboard.release(KEY_LEFT_GUI);
-    } else if (isHorizontal()) {
-      Keyboard.press(KEY_PAGE_DOWN);
-      Keyboard.release(KEY_PAGE_DOWN);
-    }
+  int key;
+  if (isX()) {
+    key = KEY_RIGHT_ARROW;
+  } else {
+    key = KEY_DOWN_ARROW;
   }
+  Keyboard.press(KEY_LEFT_SHIFT);
+  Keyboard.press(key);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  Keyboard.release(key);
+
   delay(200);
+  // if (getProfile() == 1) {
+  //   if (isNavegation()) {
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.write('e');
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //   } else if (isSelection()) {
+  //     Keyboard.press(KEY_LEFT_CTRL);
+  //     Keyboard.write('E');
+  //     Keyboard.release(KEY_LEFT_CTRL);
+  //   } else if (isMove()) {
+  //     Keyboard.press(KEY_LEFT_GUI);
+  //     Keyboard.write(']');
+  //     Keyboard.release(KEY_LEFT_GUI);
+  //   } else if (isHorizontal()) {
+  //     Keyboard.press(KEY_PAGE_DOWN);
+  //     Keyboard.release(KEY_PAGE_DOWN);
+  //   }
+  // }
+  // delay(200);
 }
 bool isX() {
   if (key1State == HIGH && key2State == LOW && key3State == LOW && key4State == LOW) {
@@ -368,8 +405,25 @@ void pushKey3() {
   // delay(300);
 }
 void pushKey4() {
-  Keyboard.write('f');
+  if ((millis() - lastViewportPress) > 2000) {
+    viewport = KEY_KP_1;
+  } else {
+    if (viewport == KEY_KP_1) {
+      viewport = KEY_KP_4;
+    } else if (viewport == KEY_KP_4) {
+      viewport = KEY_KP_5;
+    } else {
+      viewport = KEY_KP_1;
+    }
+  }
+  Keyboard.press(KEY_LEFT_SHIFT);
+  Keyboard.press(viewport);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  Keyboard.release(viewport);
+  lastViewportPress = millis();
   delay(300);
+  // Keyboard.write('f');
+  // delay(300);
   // if (getProfile() == 1) {
   //   if (key4State == LOW) {
   //     key4State = HIGH;
