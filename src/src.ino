@@ -382,12 +382,13 @@ void pushKey2() {
   delay(300);
 }
 void pushKey3() {
+  digitalWrite(key3LED, HIGH);
   Keyboard.press(KEY_LEFT_SHIFT);
   Keyboard.press(KEY_KP_7);
   Keyboard.release(KEY_LEFT_SHIFT);
   Keyboard.release(KEY_KP_7);
   delay(300);
-
+  digitalWrite(key3LED, LOW);
   // if (getProfile() == 1) {
   //   if (key3State == LOW) {
   //     releaseModKeys();
@@ -405,6 +406,7 @@ void pushKey3() {
   // delay(300);
 }
 void pushKey4() {
+  digitalWrite(key4LED, HIGH);
   if ((millis() - lastViewportPress) > 2000) {
     viewport = KEY_KP_1;
   } else {
@@ -422,6 +424,7 @@ void pushKey4() {
   Keyboard.release(viewport);
   lastViewportPress = millis();
   delay(300);
+  digitalWrite(key4LED, LOW);
   // Keyboard.write('f');
   // delay(300);
   // if (getProfile() == 1) {

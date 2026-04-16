@@ -5,7 +5,11 @@
 ![prototype](https://github.com/nano-labs/keyboard/blob/main/img/keyboard.jpg)
 ![back](https://github.com/nano-labs/keyboard/blob/main/img/back.jpg)
 
-Circuits and PCB can be found here: https://oshwlab.com/nanook/keyboard
+### Circuits and PCB
+can be found here: https://oshwlab.com/nanook/keyboard
+
+![diagram](https://github.com/nano-labs/keyboard/blob/main/img/diagram.png)
+![pcb](https://github.com/nano-labs/keyboard/blob/main/img/pcb.png)
 
 ### Home - End switch design:
 
@@ -24,8 +28,7 @@ Circuits and PCB can be found here: https://oshwlab.com/nanook/keyboard
 
 ### Keycaps art:
 
-![keycaps](https://github.com/nano-labs/keyboard/blob/main/keycaps_art/nanooklabs-09.jpg)
-Thanks [nubaia](https://www.fiverr.com/nubaia) for the great work. Check their Fiverr profile: [https://www.fiverr.com/nubaia](https://www.fiverr.com/nubaia)
+![keycaps](https://github.com/nano-labs/keyboard/blob/main/keycaps_art/keycaps.png)
 
 - [Files](https://github.com/nano-labs/keyboard/blob/main/keycaps_art/)
 
