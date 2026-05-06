@@ -23,8 +23,8 @@ int key2LED = 19; //A5
 int key3LED = 20; //A6
 int key4LED = 21; //A7
 
-int profile1State = HIGH;
-int profile2State = LOW;
+int profile1State = LOW;
+int profile2State = HIGH;
 int profile3State = LOW;
 int key1State = HIGH;
 int key2State = LOW;
@@ -103,7 +103,7 @@ void ledDance() {
 
 void up() {
   int key;
-  if (getProfile() == 1) {
+  if (getProfile() == 2) {
     if (isX()) {
       key = KEY_RIGHT_ARROW;
     } else {
@@ -113,50 +113,27 @@ void up() {
     Keyboard.press(key);
     Keyboard.release(KEY_LEFT_CTRL);
     Keyboard.release(key);
-  } else if (getProfile() == 2) {
-    if (isX()) {
-      key = KEY_LEFT_ARROW;
-    } else {
-      key = KEY_UP_ARROW;
-    }
-    Keyboard.press(KEY_LEFT_CTRL);
-    Keyboard.press(KEY_LEFT_SHIFT);
-    Keyboard.press(key);
-    Keyboard.release(KEY_LEFT_CTRL);
-    Keyboard.release(KEY_LEFT_SHIFT);
-    Keyboard.release(key);
-  } else if (getProfile() == 3) {
-    Mouse.move(0, 0, 1);
-    // if (isNavegation()) {
-    //   Keyboard.press(KEY_UP_ARROW);
-    //   Keyboard.release(KEY_UP_ARROW);
-    // } else if (isSelection() && isHorizontal()) {
-    //   Keyboard.press(KEY_LEFT_SHIFT);
-    //   Keyboard.press(KEY_LEFT_ARROW);
-    //   Keyboard.release(KEY_LEFT_ARROW);    
-    //   Keyboard.release(KEY_LEFT_SHIFT);
-    // } else if (isSelection()) {
-    //   Keyboard.press(KEY_LEFT_SHIFT);
-    //   Keyboard.press(KEY_UP_ARROW);
-    //   Keyboard.release(KEY_UP_ARROW);
-    //   Keyboard.release(KEY_LEFT_SHIFT);
-    // } else if (isMove()) {
-    //   Keyboard.press(KEY_LEFT_GUI);
-    //   Keyboard.press(KEY_LEFT_CTRL);
-    //   Keyboard.press(KEY_UP_ARROW);
-    //   Keyboard.release(KEY_LEFT_GUI);
-    //   Keyboard.release(KEY_LEFT_CTRL);
-    //   Keyboard.release(KEY_UP_ARROW);
-    // } else if (isHorizontal()) {
-    //   Keyboard.press(KEY_LEFT_ARROW);
-    //   Keyboard.release(KEY_LEFT_ARROW);    
-    // }
-  }
+  } 
+  // else if (getProfile() == 2) {
+  //   if (isX()) {
+  //     key = KEY_LEFT_ARROW;
+  //   } else {
+  //     key = KEY_UP_ARROW;
+  //   }
+  //   Keyboard.press(KEY_LEFT_CTRL);
+  //   Keyboard.press(KEY_LEFT_SHIFT);
+  //   Keyboard.press(key);
+  //   Keyboard.release(KEY_LEFT_CTRL);
+  //   Keyboard.release(KEY_LEFT_SHIFT);
+  //   Keyboard.release(key);
+  // } else if (getProfile() == 3) {
+  //   Mouse.move(0, 0, 1);
+  // }
 }
 
 void down() {
   int key;
-  if (getProfile() == 1) {
+  if (getProfile() == 2) {
     if (isX()) {
       key = KEY_LEFT_ARROW;
     } else {
@@ -166,47 +143,22 @@ void down() {
     Keyboard.press(key);
     Keyboard.release(KEY_LEFT_CTRL);
     Keyboard.release(key);
-  } else if (getProfile() == 2) {
-    if (isX()) {
-      key = KEY_RIGHT_ARROW;
-    } else {
-      key = KEY_DOWN_ARROW;
-    }
-    Keyboard.press(KEY_LEFT_CTRL);
-    Keyboard.press(KEY_LEFT_SHIFT);
-    Keyboard.press(key);
-    Keyboard.release(KEY_LEFT_CTRL);
-    Keyboard.release(KEY_LEFT_SHIFT);
-    Keyboard.release(key);
-  } else if (getProfile() == 3) {
-    Mouse.move(0, 0, -1);
-
-  // if (getProfile() == 1) {
-  //   if (isNavegation()) {
-  //     Keyboard.press(KEY_DOWN_ARROW);
-  //     Keyboard.release(KEY_DOWN_ARROW);
-  //   } else if (isSelection() && isHorizontal()) {
-  //     Keyboard.press(KEY_LEFT_SHIFT);
-  //     Keyboard.press(KEY_RIGHT_ARROW);
-  //     Keyboard.release(KEY_RIGHT_ARROW);    
-  //     Keyboard.release(KEY_LEFT_SHIFT);
-  //   } else if (isSelection()) {
-  //     Keyboard.press(KEY_LEFT_SHIFT);
-  //     Keyboard.press(KEY_DOWN_ARROW);
-  //     Keyboard.release(KEY_DOWN_ARROW);
-  //     Keyboard.release(KEY_LEFT_SHIFT);
-  //   } else if (isMove()) {
-  //     Keyboard.press(KEY_LEFT_GUI);
-  //     Keyboard.press(KEY_LEFT_CTRL);
-  //     Keyboard.press(KEY_DOWN_ARROW);
-  //     Keyboard.release(KEY_LEFT_GUI);
-  //     Keyboard.release(KEY_LEFT_CTRL);
-  //     Keyboard.release(KEY_DOWN_ARROW);
-  //   } else if (isHorizontal()) {
-  //     Keyboard.press(KEY_RIGHT_ARROW);
-  //     Keyboard.release(KEY_RIGHT_ARROW);    
-  //   }
   }
+  // else if (getProfile() == 2) {
+  //   if (isX()) {
+  //     key = KEY_RIGHT_ARROW;
+  //   } else {
+  //     key = KEY_DOWN_ARROW;
+  //   }
+  //   Keyboard.press(KEY_LEFT_CTRL);
+  //   Keyboard.press(KEY_LEFT_SHIFT);
+  //   Keyboard.press(key);
+  //   Keyboard.release(KEY_LEFT_CTRL);
+  //   Keyboard.release(KEY_LEFT_SHIFT);
+  //   Keyboard.release(key);
+  // } else if (getProfile() == 3) {
+  //   Mouse.move(0, 0, -1);
+  // }
 }
 void pushLeft() {
   int key;
@@ -215,12 +167,13 @@ void pushLeft() {
   } else {
     key = KEY_UP_ARROW;
   }
+  Keyboard.press(KEY_LEFT_CTRL);
   Keyboard.press(KEY_LEFT_SHIFT);
   Keyboard.press(key);
+  Keyboard.release(KEY_LEFT_CTRL);
   Keyboard.release(KEY_LEFT_SHIFT);
   Keyboard.release(key);
-
-  delay(300);
+  delay(100);
 
   // if (getProfile() == 1) {
   //   if (isNavegation()) {
@@ -249,12 +202,13 @@ void pushRight() {
   } else {
     key = KEY_DOWN_ARROW;
   }
+  Keyboard.press(KEY_LEFT_CTRL);
   Keyboard.press(KEY_LEFT_SHIFT);
   Keyboard.press(key);
+  Keyboard.release(KEY_LEFT_CTRL);
   Keyboard.release(KEY_LEFT_SHIFT);
   Keyboard.release(key);
-
-  delay(200);
+  delay(100);
   // if (getProfile() == 1) {
   //   if (isNavegation()) {
   //     Keyboard.press(KEY_LEFT_CTRL);
@@ -335,14 +289,19 @@ void releaseModKeys() {
 
 }
 void pushProfile1() {
-  // rotate
-    profile1State = HIGH;
-    profile2State = LOW;
-    profile3State = LOW;
-    updateLED();
+  // Esc
+    digitalWrite(profile1LED, HIGH);
+    Keyboard.press(KEY_ESC);
+    delay(200);
+    digitalWrite(profile1LED, LOW);
+
+    // profile1State = HIGH;
+    // profile2State = LOW;
+    // profile3State = LOW;
+    // updateLED();
 }
 void pushProfile2() {
-  // pan
+  // Rotate
     profile1State = LOW;
     profile2State = HIGH;
     profile3State = LOW;
@@ -407,22 +366,23 @@ void pushKey3() {
 }
 void pushKey4() {
   digitalWrite(key4LED, HIGH);
-  if ((millis() - lastViewportPress) > 2000) {
-    viewport = KEY_KP_1;
-  } else {
-    if (viewport == KEY_KP_1) {
-      viewport = KEY_KP_4;
-    } else if (viewport == KEY_KP_4) {
-      viewport = KEY_KP_5;
-    } else {
-      viewport = KEY_KP_1;
-    }
-  }
-  Keyboard.press(KEY_LEFT_SHIFT);
-  Keyboard.press(viewport);
-  Keyboard.release(KEY_LEFT_SHIFT);
-  Keyboard.release(viewport);
-  lastViewportPress = millis();
+  Keyboard.write('n');
+  // if ((millis() - lastViewportPress) > 2000) {
+  //   viewport = KEY_KP_1;
+  // } else {
+  //   if (viewport == KEY_KP_1) {
+  //     viewport = KEY_KP_4;
+  //   } else if (viewport == KEY_KP_4) {
+  //     viewport = KEY_KP_5;
+  //   } else {
+  //     viewport = KEY_KP_1;
+  //   }
+  // }
+  // Keyboard.press(KEY_LEFT_SHIFT);
+  // Keyboard.press(viewport);
+  // Keyboard.release(KEY_LEFT_SHIFT);
+  // Keyboard.release(viewport);
+  // lastViewportPress = millis();
   delay(300);
   digitalWrite(key4LED, LOW);
   // Keyboard.write('f');
