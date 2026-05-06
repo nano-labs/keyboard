@@ -292,6 +292,7 @@ void pushProfile1() {
   // Esc
     digitalWrite(profile1LED, HIGH);
     Keyboard.press(KEY_ESC);
+    Keyboard.release(KEY_ESC);
     delay(200);
     digitalWrite(profile1LED, LOW);
 
